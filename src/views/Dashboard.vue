@@ -888,31 +888,56 @@ const closeEditModal = () => { showEditModal.value = false }
 const submitEditUser = async () => {
   formError.value = ''
   formSuccess.value = ''
+
   if (!editForm.value.username) {
     formError.value = 'Username is required.'
     return
   }
+
   formLoading.value = true
+
   try {
-    await fetch(`https://ancs-website-backend-production.up.railway.app/api/users/${data.id}/update/`, {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${authStore.token}` },
-      body: JSON.stringify({
-        username:  editForm.value.username,
-        email:     editForm.value.email,
-        role:      editForm.value.role,
-        is_active: editForm.value.is_active,
-      })
-    })
+
+    const res = await fetch(
+      `https://ancs-website-backend-production.up.railway.app/api/users/${editForm.value.id}/update/`,
+      {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${authStore.token}`
+        },
+
+        body: JSON.stringify({
+          username: editForm.value.username,
+          email: editForm.value.email,
+          role: editForm.value.role,
+          is_active: editForm.value.is_active,
+        })
+      }
+    )
+
     const data = await res.json()
-    if (!res.ok) throw new Error(data.error || 'Failed to update user')
+
+    if (!res.ok) {
+      throw new Error(data.error || 'Failed to update user')
+    }
+
     formSuccess.value = 'User updated successfully!'
+
     await fetchUsers()
-    setTimeout(closeEditModal, 1200)
+
+    setTimeout(() => {
+      closeEditModal()
+    }, 1200)
+
   } catch (err) {
+
     formError.value = err.message || 'Failed to update user.'
+
   } finally {
+
     formLoading.value = false
+
   }
 }
 
