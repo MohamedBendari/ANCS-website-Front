@@ -130,7 +130,7 @@ const submitForm = async () => {
   isSubmitting.value = true
   submitStatus.value = null
   try {
-    const response = await fetch('http://127.0.0.1:8000/api/messages/', {
+    const response = await fetch('https://ancs-website-backend-production.up.railway.app/api/messages/', {
   method: 'POST',
   headers: {
     'Content-Type': 'application/json',

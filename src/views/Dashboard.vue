@@ -769,7 +769,7 @@ const avatarColors = ['#42a5f5','#0077b6','#22c55e','#f59e0b','#8b5cf6','#ef4444
 const avatarColor = (name) => avatarColors[name.charCodeAt(0) % avatarColors.length]
 
 // ── Fetch Messages ──
-const fetchMessages = async (url = 'http://127.0.0.1:8000/api/messages/') => {
+const fetchMessages = async (url = 'https://ancs-website-backend-production.up.railway.app/api/messages/') => {
   isLoadingData.value = true
   let finalUrl = url
   if (search.value) finalUrl += (finalUrl.includes('?') ? '&' : '?') + `search=${search.value}`
@@ -796,7 +796,7 @@ const fetchMessages = async (url = 'http://127.0.0.1:8000/api/messages/') => {
 const fetchUsers = async () => {
   isLoadingUsers.value = true
   try {
-    const res = await fetch('http://127.0.0.1:8000/api/users/', {
+    const res = await fetch('https://ancs-website-backend-production.up.railway.app/api/users/', {
       headers: { Authorization: `Bearer ${authStore.token}` }
     })
     const data = await res.json()
@@ -839,7 +839,7 @@ const submitAddUser = async () => {
   }
   formLoading.value = true
   try {
-    const res = await fetch('http://127.0.0.1:8000/api/register/', {
+    const res = await fetch('https://ancs-website-backend-production.up.railway.app/api/register/', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${authStore.token}` },
       body: JSON.stringify({
@@ -853,7 +853,7 @@ const submitAddUser = async () => {
 
     // لو الـ role admin، نعمل update بعد الإنشاء
     if (userForm.value.role === 'admin' && data.id) {
-      await fetch(`http://127.0.0.1:8000/api/users/${data.id}/update/`, {
+      await fetch(`https://ancs-website-backend-production.up.railway.app/api/users/${data.id}/update/`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${authStore.token}` },
         body: JSON.stringify({ role: 'admin' })
@@ -894,7 +894,7 @@ const submitEditUser = async () => {
   }
   formLoading.value = true
   try {
-    const res = await fetch(`http://127.0.0.1:8000/api/users/${editForm.value.id}/update/`, {
+    await fetch(`https://ancs-website-backend-production.up.railway.app/api/users/${data.id}/update/`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${authStore.token}` },
       body: JSON.stringify({
@@ -926,7 +926,7 @@ const confirmDelete = (user) => {
 const submitDelete = async () => {
   formLoading.value = true
   try {
-    const res = await fetch(`http://127.0.0.1:8000/api/users/${userToDelete.value.id}/delete/`, {
+    const res = await fetch(`https://ancs-website-backend-production.up.railway.app/api/users/${userToDelete.value.id}/delete/`, {
       method: 'DELETE',
       headers: { Authorization: `Bearer ${authStore.token}` }
     })
@@ -966,7 +966,7 @@ const submitDelete = async () => {
   try {
 
     const res = await fetch(
-      'http://127.0.0.1:8000/api/change-password/',
+      'https://ancs-website-backend-production.up.railway.app/api/change-password/',
       {
         method: 'POST',
         headers: {

@@ -137,7 +137,7 @@ const handleLogin = async () => {
   isLoading.value = true
   serverError.value = ''
   try {
-    const res = await fetch('http://127.0.0.1:8000/api/login/', {
+     const res = await fetch('https://ancs-website-backend-production.up.railway.app/api/login/', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
