@@ -6,12 +6,14 @@ import Features  from '../views/Features.vue'
 import Team      from '../views/Team.vue'
 import Contact   from '../views/Contact.vue'
 import Download  from '../views/Download.vue'
+import AIBot     from '../views/AIBot.vue'
 import Dashboard from '../views/Dashboard.vue'
 import Auth      from '../views/Auth.vue'
 import NotFound  from '../views/NotFound.vue'
 
 const routes = [
   { path: '/',          component: Home,      meta: { title: 'ANCS - Automated Network Configuration System' } },
+  { path: '/ai-bot',     component: AIBot,     meta: { title: 'AI Bot - ANCS' } },
   { path: '/about',     component: About,     meta: { title: 'About - ANCS' } },
   { path: '/features',  component: Features,  meta: { title: 'Features - ANCS' } },
   { path: '/team',      component: Team,      meta: { title: 'Team - ANCS' } },

@@ -12,6 +12,7 @@
           <router-link to="/">Home</router-link>
           <router-link to="/about">About</router-link>
           <router-link to="/features">Features</router-link>
+          <router-link to="/ai-bot">AI Bot</router-link>
           <router-link to="/team">Team</router-link>
           <router-link to="/contact">Contact</router-link>
         </div>
@@ -54,6 +55,7 @@
         <router-link to="/" @click="closeMenu">Home</router-link>
         <router-link to="/about" @click="closeMenu">About</router-link>
         <router-link to="/features" @click="closeMenu">Features</router-link>
+        <router-link to="/ai-bot" @click="closeMenu">AI Bot</router-link>
         <router-link to="/team" @click="closeMenu">Team</router-link>
         <router-link to="/contact" @click="closeMenu">Contact</router-link>
         <div class="mobile-actions">
@@ -334,7 +336,7 @@ async function handleGoogleCredential(response) {
   authStatus.value    = null
   try {
     // بنبعت { token: "eyJ..." } — بالظبط زي ما الـ Backend بيستقبل في google_login view
-    const res = await fetch('https://ancs-website-backend-production.up.railway.app/api/auth/google/', {
+    const res = await fetch('http://127.0.0.1:8000/api/auth/google/', {
       method:  'POST',
       headers: { 'Content-Type': 'application/json' },
       body:    JSON.stringify({ token: response.credential }),
@@ -378,7 +380,7 @@ const handleLogin = async () => {
   isLoading.value = true
   resetStatus()
   try {
-    const res = await fetch('https://ancs-website-backend-production.up.railway.app/api/login/', {
+    const res = await fetch('http://127.0.0.1:8000/api/login/', {
       method: 'POST', headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ username: loginData.value.username.trim(), password: loginData.value.password.trim() })
     })
@@ -401,7 +403,7 @@ const handleSignup = async () => {
   isLoading.value = true
   resetStatus()
   try {
-    const res = await fetch('https://ancs-website-backend-production.up.railway.app/api/register/', {
+    const res = await fetch('http://127.0.0.1:8000/api/register/', {
       method: 'POST', headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ username: signupData.value.name.trim(), email: signupData.value.email.trim(), password: signupData.value.password })
     })
