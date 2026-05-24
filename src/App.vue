@@ -336,12 +336,13 @@ async function handleGoogleCredential(response) {
   authStatus.value    = null
   try {
     // بنبعت { token: "eyJ..." } — بالظبط زي ما الـ Backend بيستقبل في google_login view
-    const res = await fetch('http://127.0.0.1:8000/api/auth/google/', {
+    const res = await fetch('https://ancs-website-backend-production.up.railway.app/api/auth/google/', {
       method:  'POST',
       headers: { 'Content-Type': 'application/json' },
       body:    JSON.stringify({ token: response.credential }),
     })
     const data = await res.json()
+
     if (!res.ok) throw new Error(data.error || 'Google login failed')
 
     // data.access = JWT | data.username = اسم اليوزر | data.role = "user"
@@ -380,7 +381,7 @@ const handleLogin = async () => {
   isLoading.value = true
   resetStatus()
   try {
-    const res = await fetch('http://127.0.0.1:8000/api/login/', {
+    const res = await fetch('https://ancs-website-backend-production.up.railway.app/api/login/', {
       method: 'POST', headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ username: loginData.value.username.trim(), password: loginData.value.password.trim() })
     })
@@ -403,7 +404,7 @@ const handleSignup = async () => {
   isLoading.value = true
   resetStatus()
   try {
-    const res = await fetch('http://127.0.0.1:8000/api/register/', {
+    const res = await fetch('https://ancs-website-backend-production.up.railway.app/api/register/', {
       method: 'POST', headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ username: signupData.value.name.trim(), email: signupData.value.email.trim(), password: signupData.value.password })
     })

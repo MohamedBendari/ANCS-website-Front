@@ -4,7 +4,7 @@ import preview from "../assets/ancs-app.png"
 const emit = defineEmits(['open-auth'])
 const openAuth = (type) => emit('open-auth', type)
 </script>
-
+⋮----
 <template>
   <section class="hero">
     <div class="hero-content">
@@ -18,7 +18,6 @@ const openAuth = (type) => emit('open-auth', type)
       <div class="buttons">
         <router-link to="/download" class="btn primary">Download</router-link>
         <router-link to="/team" class="btn secondary">Meet Our Team</router-link>
-        <router-link to="/ai-bot" class="btn secondary">Talk to AI</router-link>
         <router-link to="/about" class="btn ghost">Learn More</router-link>
       </div>
     </div>
@@ -117,7 +116,30 @@ p { color: var(--text-muted, #cbd5e1); }
   display: flex; flex-direction: column; align-items: center;
   text-align: center; max-width: 700px; width: 100%; padding: 20px 0;
 }
-.hero-logo { width: clamp(70px, 15vw, 100px); margin-bottom: 20px; border-radius: 18px; box-shadow: 0 8px 32px rgba(66,165,245,0.25); }
+.hero-logo {
+  width: clamp(85px, 15vw, 120px);
+
+  padding: 8px;
+
+  border-radius: 28px;
+
+  background:
+    linear-gradient(var(--body-bg), var(--body-bg)) padding-box,
+    linear-gradient(135deg, #42a5f5, #0077b6, #00c6ff) border-box;
+
+  border: 3px solid transparent;
+
+  box-shadow:
+    0 10px 30px rgba(0,0,0,0.12);
+
+  transition: all 0.35s ease;
+}
+.hero-logo:hover {
+  transform: translateY(-4px) scale(1.03);
+
+  box-shadow:
+    0 18px 40px rgba(66,165,245,0.22);
+}
 .hero h1 {
   font-size: clamp(42px, 10vw, 72px);
   font-weight: 900;
