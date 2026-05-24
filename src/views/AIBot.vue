@@ -85,7 +85,6 @@ const isLoggedIn = computed(() => authStore.isLoggedIn)
 const prompt        = ref('')
 const isLoading     = ref(false)
 const chatContainer = ref(null)
-const openAIKey     = import.meta.env.VITE_OPENAI_API_KEY
 
 const messages = ref([
   { role: 'assistant', text: 'Hello 👋 I am ANCS AI. I can help you with network configuration, routing protocols, GNS3 setups, and any other questions. How can I help you today?' }
@@ -100,41 +99,7 @@ const appendMessage = async (role, text) => {
   messages.value.push({ role, text })
   await scrollToBottom()
 }
-
-const queryOpenAI = async (question) => {
-  const payload = {
-    model: 'gpt-4o-mini',
-    messages: [
-      {
-        role: 'system',
-        content: `You are a professional AI assistant for ANCS (Auto Network Configuration System).
-Answer rules:
-- Answer any question in any field.
-- Understand both Arabic and English.
-- If the user asks in Arabic, answer in Arabic.
-- If the user asks in English, answer in English.
-- Explain clearly and simply.
-- For programming questions, write correct and organized code.
-- For math questions, solve step by step.
-- Use clean and readable formatting.`
-      },
-      { role: 'user', content: question }
-    ],
-    temperature: 0.7,
-    max_tokens: 1000
-  }
-
-  const response = await fetch('https://api.openai.com/v1/chat/completions', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${openAIKey}` },
-    body: JSON.stringify(payload)
-  })
-
-  if (!response.ok) throw new Error('OpenAI API Error')
-  const data = await response.json()
-  return data.choices?.[0]?.message?.content?.trim() || 'No response found.'
-}
-
+  
 const sendMessage = async () => {
   const text = prompt.value.trim()
   if (!text || isLoading.value) return
@@ -142,8 +107,26 @@ const sendMessage = async () => {
   prompt.value = ''
   isLoading.value = true
   try {
-    const answer = await queryOpenAI(text)
-    await appendMessage('assistant', answer)
+    const token = localStorage.getItem('access')
+
+const response = await fetch('https://ancs-website-backend-production.up.railway.app/api/ai/chat/', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+    'Authorization': `Bearer ${token}`
+  },
+  body: JSON.stringify({
+    message: text
+  })
+})
+
+if (!response.ok) {
+  throw new Error('AI request failed')
+}
+
+const data = await response.json()
+
+await appendMessage('assistant', data.reply)
   } catch (error) {
     await appendMessage('assistant', 'An error occurred while connecting to the AI. Please try again.')
     console.error(error)
