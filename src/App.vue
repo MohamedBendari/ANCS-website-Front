@@ -78,7 +78,7 @@
                 <span>{{ authStore.username }}</span>
               </div>
             </template>
-            <button @click="logout(); closeMenu()">Logout</button>
+            <button @click="logout; closeMenu()">Logout</button>
           </template>
           <router-link to="/download" class="mobile-download" @click="closeMenu">Download</router-link>
         </div>
@@ -319,22 +319,14 @@ function startGoogleLogin() {
   // prompt() بيفتح Google popup
   // لما اليوزر يختار حسابه → Google يكال handleGoogleCredential تلقائياً
   window.google.accounts.id.prompt((notification) => {
-  console.log(notification)
-
-  if (notification.isNotDisplayed()) {
-    authStatus.value = {
-      type: 'error',
-      message: 'Not Displayed'
+    if (notification.isNotDisplayed() || notification.isSkippedMoment()) {
+      authStatus.value = {
+        type: 'error',
+        message: 'Google popup was blocked. Please allow popups for this site.'
+      }
     }
-  }
-
-  if (notification.isSkippedMoment()) {
-    authStatus.value = {
-      type: 'error',
-      message: 'Skipped Moment'
-    }
-  }
-})
+  })
+}
 
 async function handleGoogleCredential(response) {
 
