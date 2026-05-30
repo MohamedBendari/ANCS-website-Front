@@ -319,14 +319,22 @@ function startGoogleLogin() {
   // prompt() بيفتح Google popup
   // لما اليوزر يختار حسابه → Google يكال handleGoogleCredential تلقائياً
   window.google.accounts.id.prompt((notification) => {
-    if (notification.isNotDisplayed() || notification.isSkippedMoment()) {
-      authStatus.value = {
-        type: 'error',
-        message: 'Google popup was blocked. Please allow popups for this site.'
-      }
+  console.log(notification)
+
+  if (notification.isNotDisplayed()) {
+    authStatus.value = {
+      type: 'error',
+      message: 'Not Displayed'
     }
-  })
-}
+  }
+
+  if (notification.isSkippedMoment()) {
+    authStatus.value = {
+      type: 'error',
+      message: 'Skipped Moment'
+    }
+  }
+})
 
 async function handleGoogleCredential(response) {
 
