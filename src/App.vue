@@ -12,7 +12,6 @@
           <router-link to="/">Home</router-link>
           <router-link to="/about">About</router-link>
           <router-link to="/features">Features</router-link>
-          <router-link to="/ai-bot">AI Bot</router-link>
           <router-link to="/team">Team</router-link>
           <router-link to="/contact">Contact</router-link>
         </div>
@@ -55,7 +54,6 @@
         <router-link to="/" @click="closeMenu">Home</router-link>
         <router-link to="/about" @click="closeMenu">About</router-link>
         <router-link to="/features" @click="closeMenu">Features</router-link>
-        <router-link to="/ai-bot" @click="closeMenu">AI Bot</router-link>
         <router-link to="/team" @click="closeMenu">Team</router-link>
         <router-link to="/contact" @click="closeMenu">Contact</router-link>
         <div class="mobile-actions">
@@ -80,7 +78,7 @@
                 <span>{{ authStore.username }}</span>
               </div>
             </template>
-            <button @click="logout; closeMenu()">Logout</button>
+            <button @click="logout(); closeMenu()">Logout</button>
           </template>
           <router-link to="/download" class="mobile-download" @click="closeMenu">Download</router-link>
         </div>
@@ -330,32 +328,54 @@ function startGoogleLogin() {
   })
 }
 
-// Google بيكال الـ function دي تلقائياً — response.credential هو الـ ID Token
 async function handleGoogleCredential(response) {
+
+  console.log("GOOGLE RESPONSE:", response)
+  console.log("GOOGLE TOKEN:", response?.credential)
+
   googleLoading.value = true
   authStatus.value    = null
+
   try {
-    // بنبعت { token: "eyJ..." } — بالظبط زي ما الـ Backend بيستقبل في google_login view
+
     const res = await fetch('https://ancs-website-backend-production.up.railway.app/api/auth/google/', {
-      method:  'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body:    JSON.stringify({ token: response.credential }),
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+
+      body: JSON.stringify({
+        token: response?.credential
+      }),
     })
+
     const data = await res.json()
 
-    if (!res.ok) throw new Error(data.error || 'Google login failed')
+    if (!res.ok)
+      throw new Error(data.error || 'Google login failed')
 
-    // data.access = JWT | data.username = اسم اليوزر | data.role = "user"
-    authStore.loginSuccess(data.access, data.username, data.role)
+    authStore.loginSuccess(
+      data.access,
+      data.username,
+      data.role
+    )
+
     closeAuth()
-    // اليوزر يفضل على نفس الصفحة
+
   } catch (err) {
-    authStatus.value = { type: 'error', message: err.message || 'Google login failed. Please try again.' }
+
+    console.error(err)
+
+    authStatus.value = {
+      type: 'error',
+      message: err.message || 'Google login failed. Please try again.'
+    }
+
   } finally {
+
     googleLoading.value = false
   }
 }
-
 // ══ Modal Controls ═════════════════════════════════════════════
 const openAuth = (type) => {
   isLogin.value       = type === 'login'
