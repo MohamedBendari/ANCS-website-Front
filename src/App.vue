@@ -78,7 +78,7 @@
                 <span>{{ authStore.username }}</span>
               </div>
             </template>
-            <button @click="logout; closeMenu()">Logout</button>
+            <button @click="logout(); closeMenu()">Logout</button>
           </template>
           <router-link to="/download" class="mobile-download" @click="closeMenu">Download</router-link>
         </div>
