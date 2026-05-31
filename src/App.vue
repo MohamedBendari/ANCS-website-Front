@@ -312,20 +312,38 @@ function initGoogleSDK() {
 }
 
 function startGoogleLogin() {
-  if (!window.google?.accounts?.id) {
+  if (!window.google?.accounts?.oauth2) {
     authStatus.value = { type: 'error', message: 'Google is loading, please try again.' }
     return
   }
-  // prompt() بيفتح Google popup
-  // لما اليوزر يختار حسابه → Google يكال handleGoogleCredential تلقائياً
-  window.google.accounts.id.prompt((notification) => {
-    if (notification.isNotDisplayed() || notification.isSkippedMoment()) {
-      authStatus.value = {
-        type: 'error',
-        message: 'Google popup was blocked. Please allow popups for this site.'
+  const tokenClient = window.google.accounts.oauth2.initTokenClient({
+    client_id: GOOGLE_CLIENT_ID,
+    scope: 'email profile openid',
+    callback: async (tokenResponse) => {
+      if (tokenResponse.error) {
+        authStatus.value = { type: 'error', message: 'Google login was cancelled.' }
+        return
+      }
+      googleLoading.value = true
+      authStatus.value = null
+      try {
+        const res = await fetch('https://ancs-website-backend-production.up.railway.app/api/auth/google/', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ access_token: tokenResponse.access_token })
+        })
+        const data = await res.json()
+        if (!res.ok) throw new Error(data.error || 'Google login failed')
+        authStore.loginSuccess(data.access, data.username, data.role)
+        closeAuth()
+      } catch (err) {
+        authStatus.value = { type: 'error', message: err.message || 'Google login failed.' }
+      } finally {
+        googleLoading.value = false
       }
     }
   })
+  tokenClient.requestAccessToken({ prompt: 'select_account' })
 }
 
 async function handleGoogleCredential(response) {
