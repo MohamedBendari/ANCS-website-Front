@@ -165,7 +165,7 @@ const submitForm = async () => {
 .contact {
   min-height: 100vh;
   padding: 120px 20px 60px;
-  background: var(--page-bg-gradient);
+  background: transparent;
 }
 .container {
   max-width: 1200px;

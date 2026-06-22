@@ -1,6 +1,8 @@
 <script setup>
 import { ref } from 'vue'
-import preview from "../assets/ancs-app.png"
+import mainUi from "../assets/main-ui.jpg"
+import agentChat from "../assets/agent-chat.jpg"
+import agentLogs from "../assets/agent-logs.jpg"
 const emit = defineEmits(['open-auth'])
 const openAuth = (type) => emit('open-auth', type)
 </script>
@@ -10,10 +12,11 @@ const openAuth = (type) => emit('open-auth', type)
     <div class="hero-content">
       <img src="../assets/ancs-logo.png" class="hero-logo">
       <h1>ANCS</h1>
-      <h3>Automated Network Configuration System</h3>
+      <h3>Autonomous Network Configuration & Orchestration System</h3>
       <p>
-        A modern platform that helps network engineers automate
-        router and switch configuration using intelligent tools.
+        ANCS is an AI-powered network automation platform that combines
+        guided configuration generation, deep GNS3 integration, multi-vendor
+        device management and an intelligent AI Copilot for modern network operations.
       </p>
       <div class="buttons">
         <router-link to="/download" class="btn primary">Download</router-link>
@@ -24,9 +27,22 @@ const openAuth = (type) => emit('open-auth', type)
   </section>
   <section class="stats">
     <div class="stats-grid">
-      <div class="stat-card"><h2>10x</h2><p>Faster Configuration</p></div>
-      <div class="stat-card"><h2>AI</h2><p>Powered Analysis</p></div>
-      <div class="stat-card"><h2>24/7</h2><p>Automation</p></div>
+
+      <div class="stat-card">
+        <h2>34+</h2>
+        <p>AI Tools</p>
+      </div>
+
+      <div class="stat-card">
+        <h2>Multi-Vendor</h2>
+        <p>Cisco IOS & Huawei VRP</p>
+      </div>
+
+      <div class="stat-card">
+        <h2>GNS3</h2>
+        <p>Live Topology Discovery</p>
+      </div>
+
     </div>
   </section>
   <section class="platforms">
@@ -41,13 +57,23 @@ const openAuth = (type) => emit('open-auth', type)
     </div>
   </section>
   <section class="tech">
-    <h2>Built With Modern Technologies</h2>
+    <h2>Technology Stack</h2>
+
     <div class="tech-icons">
-      <div class="tech-card">Python</div>
-      <div class="tech-card">Vue.js</div>
-      <div class="tech-card">Netmiko</div>
-      <div class="tech-card">Machine Learning</div>
-      <div class="tech-card">PostgreSQL</div>
+
+      <div class="tech-card">🐍 Python</div>
+      <div class="tech-card">💚 Vue.js</div>
+      <div class="tech-card">🖥️ PySide6</div>
+      <div class="tech-card">🗄️ SQLite</div>
+      <div class="tech-card">🔗 GNS3</div>
+      <div class="tech-card">🔌 REST API</div>
+      <div class="tech-card">✨ Gemini AI</div>
+      <div class="tech-card">🔐 Paramiko</div>
+      <div class="tech-card">🔒 SSH</div>
+      <div class="tech-card">📡 Telnet</div>
+      <div class="tech-card">🌐 Cisco IOS</div>
+      <div class="tech-card">⚙️ Huawei VRP</div>
+
     </div>
   </section>
   <section class="overview">
@@ -62,6 +88,100 @@ const openAuth = (type) => emit('open-auth', type)
       </p>
     </div>
   </section>
+  <section class="problem">
+    <div class="container">
+      <h2>The Problem We Solve</h2>
+      <p>
+        Traditional network configuration is slow, repetitive, and highly
+        prone to human error. Studies indicate that approximately 80% of
+        network outages are caused by configuration mistakes.
+
+        ANCS reduces complexity by automating network deployment,
+        validation, auditing and management through intelligent workflows,
+        guided wizards, and AI-powered assistance.
+      </p>
+    </div>
+  </section>
+
+  <section class="features">
+    <h2>Core Features</h2>
+
+    <div class="feature-grid">
+
+      <div class="feature-card">
+        <h3>Guided Configuration Wizards</h3>
+        <p>
+          Generate complete Cisco IOS configurations for VLANs,
+          OSPF, EIGRP, RIP, DHCP, ACLs and Inter-VLAN Routing
+          from simple user inputs.
+        </p>
+      </div>
+
+      <div class="feature-card">
+        <h3>Deep GNS3 Integration</h3>
+        <p>
+          Discover network topologies automatically, manage nodes,
+          synchronize configurations and interact directly with
+          GNS3 through REST APIs.
+        </p>
+      </div>
+
+      <div class="feature-card">
+        <h3>AI Network Copilot</h3>
+        <p>
+          AI-powered assistant capable of network discovery,
+          auditing, troubleshooting, deployment and
+          connectivity tracing.
+        </p>
+      </div>
+
+      <div class="feature-card">
+        <h3>Multi-Protocol Communication</h3>
+        <p>
+          Support for SSH, Telnet and Serial connections with
+          intelligent protocol handling.
+        </p>
+      </div>
+
+      <div class="feature-card">
+        <h3>Live Configuration Sync</h3>
+        <p>
+          Pull existing configurations from devices and
+          automatically synchronize network state.
+        </p>
+      </div>
+
+      <div class="feature-card">
+        <h3>Bulk Deployment</h3>
+        <p>
+          Deploy configurations to multiple devices
+          simultaneously with detailed reporting.
+        </p>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="copilot">
+    <h2>Meet ANCS AI Copilot</h2>
+
+    <p class="copilot-text">
+      ANCS AI Copilot is an intelligent networking assistant powered
+      by advanced Large Language Models. It can discover devices,
+      generate configurations, audit networks, trace connectivity,
+      and assist engineers in real-time operations.
+    </p>
+
+    <div class="copilot-grid">
+      <div class="copilot-card">Network Discovery</div>
+      <div class="copilot-card">Configuration Generation</div>
+      <div class="copilot-card">Security Auditing</div>
+      <div class="copilot-card">Connectivity Tracing</div>
+      <div class="copilot-card">Deployment Assistance</div>
+      <div class="copilot-card">Topology Analysis</div>
+    </div>
+  </section>
+
   <section class="advantages">
     <h2>Why Engineers Use ANCS</h2>
     <div class="adv-grid">
@@ -80,13 +200,103 @@ const openAuth = (type) => emit('open-auth', type)
       <div class="step"><span>4</span><p>Deploy Securely</p></div>
     </div>
   </section>
-  <section class="preview">
-    <h2>Application Preview</h2>
-    <p>Experience the intuitive ANCS interface</p>
-    <div class="preview-box">
-      <img :src="preview" class="preview-img">
+  <section class="why-ancs">
+    <h2>Why Choose ANCS?</h2>
+
+    <div class="adv-grid">
+
+      <div class="adv-card">
+        <h3>No-Code Automation</h3>
+        <p>
+          Generate complete configurations without writing
+          Python scripts or YAML playbooks.
+        </p>
+      </div>
+
+      <div class="adv-card">
+        <h3>Educational Friendly</h3>
+        <p>
+          Designed for networking students and educational labs.
+        </p>
+      </div>
+
+      <div class="adv-card">
+        <h3>AI + Automation</h3>
+        <p>
+          Combines intelligent assistance with direct deployment.
+        </p>
+      </div>
+
+      <div class="adv-card">
+        <h3>Open Source</h3>
+        <p>
+          Free, extensible and accessible for everyone.
+        </p>
+      </div>
+
     </div>
   </section>
+
+  <section class="preview">
+    <h2>Inside ANCS Platform</h2>
+
+    <p>
+      Explore the core modules of ANCS, from network configuration
+      management to AI-powered automation and intelligent topology analysis.
+    </p>
+
+    <div class="screenshots">
+
+      <div class="screen-card">
+        <img :src="mainUi" class="preview-img">
+
+        <div class="screen-content">
+          <h3>Main Network Manager</h3>
+
+          <p>
+            The central workspace for network engineers.
+            Discover devices, generate configurations,
+            deploy changes, manage templates, perform
+            subnet calculations and monitor network operations
+            from a unified dashboard.
+          </p>
+        </div>
+      </div>
+
+      <div class="screen-card">
+        <img :src="agentChat" class="preview-img">
+
+        <div class="screen-content">
+          <h3>AI Copilot Assistant</h3>
+
+          <p>
+            ANCS AI Copilot connects directly to GNS3 projects
+            and network devices. Engineers can interact using
+            natural language to discover topology information,
+            generate configurations, troubleshoot issues,
+            audit security settings and automate deployments.
+          </p>
+        </div>
+      </div>
+
+      <div class="screen-card">
+        <img :src="agentLogs" class="preview-img">
+
+        <div class="screen-content">
+          <h3>Execution Logs & Topology Intelligence</h3>
+
+          <p>
+            Monitor tool execution, AI reasoning workflows,
+            structured events and real-time topology analysis.
+            ANCS provides complete visibility into every
+            operation performed by the AI agent.
+          </p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
   <section class="cta">
     <h2>Start Automating Your Network Today</h2>
     <div class="cta-buttons">
@@ -102,7 +312,7 @@ h2 { font-size: clamp(28px, 5vw, 42px); margin-bottom: 30px; color: var(--text-p
 p { color: var(--text-muted, #cbd5e1); }
 /* HERO */
 .hero {
-  
+
   min-height: 100vh;
   padding: 140px 20px 80px;
   display: flex;
@@ -149,10 +359,10 @@ p { color: var(--text-muted, #cbd5e1); }
 .hero > .hero-content > p { font-size: clamp(14px, 3vw, 17px); max-width: 560px; color: var(--text-muted); }
 .buttons { margin-top: 30px; display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
 .btn { padding: 13px 26px; border-radius: 10px; text-decoration: none; font-weight: 600; transition: 0.3s; font-family: inherit; cursor: pointer; font-size: clamp(13px, 3vw, 15px); }
-.primary { 
-  background: #0077b6; 
-  color: white; 
-  border: none; 
+.primary {
+  background: #0077b6;
+  color: white;
+  border: none;
 }
 .primary:hover { background: #0096c7; transform: translateY(-3px); }
 .secondary { border: 1px solid rgba(66,165,245,0.5); color: #42a5f5; background: rgba(66,165,245,0.08); }
@@ -160,7 +370,8 @@ p { color: var(--text-muted, #cbd5e1); }
 .ghost { border: 1px solid rgba(255,255,255,0.25); color: var(--text-muted); background: none; }
 .ghost:hover { border-color: var(--text-secondary); color: var(--text-primary); }
 /* STATS */
-.stats { background: var(--body-bg); }
+.stats { background: rgba(0,0,0,0.15);
+backdrop-filter: blur(8px); }
 .stats-grid { display: flex; justify-content: center; gap: 30px; flex-wrap: wrap; }
 .stat-card { background: var(--card-bg-solid); padding: 30px 40px; border-radius: 10px; transition: 0.3s; min-width: 140px; }
 .stat-card h2 { color: #42a5f5; }
@@ -194,14 +405,48 @@ p { color: var(--text-muted, #cbd5e1); }
 .step p { color: var(--text-muted); }
 /* PREVIEW */
 .preview { background: var(--section-alt-bg); }
-.preview-box {
-  margin-top: 40px; background: var(--body-bg); padding: 16px;
-  border-radius: 15px; box-shadow: 0 25px 50px rgba(0,0,0,0.6);
-  display: inline-block; animation: float 6s ease-in-out infinite;
-  max-width: 100%; overflow: hidden;
+
+.screenshots {
+  display: flex;
+  flex-direction: column;
+  gap: 60px;
+  margin-top: 50px;
 }
-.preview-img { width: 900px; max-width: 100%; border-radius: 10px; display: block; }
-@keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+
+.screen-card {
+  background: var(--card-bg-solid);
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 20px 50px rgba(0,0,0,.4);
+  transition: .3s;
+}
+
+.screen-card:hover {
+  transform: translateY(-8px);
+}
+
+.preview-img {
+  width: 100%;
+  display: block;
+}
+
+.screen-content {
+  padding: 30px;
+}
+
+.screen-content h3 {
+  color: #42a5f5;
+  font-size: 28px;
+  margin-bottom: 15px;
+}
+
+.screen-content p {
+  max-width: 900px;
+  margin: auto;
+  line-height: 1.8;
+  font-size: 16px;
+}
+/* BOOK */
 /* CTA */
 .cta { background: var(--hero-bg-gradient); }
 .cta-buttons { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-top: 20px; }
@@ -216,5 +461,66 @@ p { color: var(--text-muted, #cbd5e1); }
   .stats-grid { gap: 16px; }
   .stat-card { padding: 20px 30px; width: 100%; max-width: 280px; }
   .step { width: 100%; max-width: 280px; }
+}
+
+.problem,
+.features,
+.copilot,
+.why-ancs {
+  background: var(--body-bg);
+}
+
+.feature-grid,
+.copilot-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit,minmax(260px,1fr));
+  gap: 20px;
+  margin-top: 40px;
+}
+
+.feature-card,
+.copilot-card {
+  background: var(--card-bg-solid);
+  padding: 28px;
+  border-radius: 14px;
+  transition: .3s;
+  color: var(--text-primary);
+}
+
+.feature-card:hover,
+.copilot-card:hover {
+  transform: translateY(-6px);
+  background: var(--card-bg-hover);
+}
+
+.feature-card h3 {
+  color: #42a5f5;
+  margin-bottom: 12px;
+}
+
+.copilot-text {
+  max-width: 800px;
+  margin: auto;
+  line-height: 1.8;
+}
+
+.problem p {
+  max-width: 850px;
+  margin: auto;
+  line-height: 1.8;
+}
+[data-theme="dark"] .hero,
+[data-theme="dark"] .overview,
+[data-theme="dark"] .workflow,
+[data-theme="dark"] .problem,
+[data-theme="dark"] .features,
+[data-theme="dark"] .copilot,
+[data-theme="dark"] .why-ancs,
+[data-theme="dark"] .platforms,
+[data-theme="dark"] .tech,
+[data-theme="dark"] .advantages,
+[data-theme="dark"] .preview,
+[data-theme="dark"] .cta {
+  background: transparent !important;
 }
 </style>

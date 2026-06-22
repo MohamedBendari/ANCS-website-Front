@@ -102,7 +102,7 @@
 .about-page {
   min-height: 100vh;
   padding: 120px 20px 80px;
-  background: var(--page-bg-gradient);
+  background: transparent;
   color: var(--text-primary);
   font-family: 'Inter', sans-serif;
   overflow-x: hidden;

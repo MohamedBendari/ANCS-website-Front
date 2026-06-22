@@ -110,7 +110,7 @@
 .features {
   min-height: 100vh;
   padding: 120px 20px 80px;
-  background: var(--page-bg-gradient);
+  background: transparent;
 }
 .container {
   max-width: 1400px;

@@ -160,20 +160,28 @@
   </div>
   <div class="card-info">
     <h3>Youssef Samir</h3>
-    <span class="role backend">Python Developer</span>
+    <span class="role backend">System Administrator</span>
     <p>
-      Python developer specialized in building desktop applications,
-      working with GUI frameworks, system communication, and network automation tools.
-    </p>
+  System Administrator specialized in network infrastructure,
+  Active Directory management, automation tools, and enterprise system administration.
+ </p>
     <!-- 🟢 Skills -->
     <div class="skills-section">
-      <div class="skills backend">
-        <span><i class="fab fa-python"></i> Python 3.7+</span>
-        <span><i class="fas fa-desktop"></i> PySide (GUI)</span>
-        <span><i class="fas fa-network-wired"></i> Paramiko (SSH)</span>
-        <span><i class="fas fa-plug"></i> PySerial (Serial)</span>
-        <span><i class="fas fa-code"></i> Requests (API)</span>
-      </div>
+    <div class="skills backend">
+  <span><i class="fab fa-python"></i> Python 3.7+</span>
+
+  <span><i class="fas fa-users-cog"></i> Active Directory</span>
+
+  <span><i class="fas fa-desktop"></i> PySide (GUI)</span>
+
+  <span><i class="fas fa-network-wired"></i> Paramiko (SSH)</span>
+
+  <span><i class="fas fa-plug"></i> PySerial (Serial)</span>
+
+  <span><i class="fas fa-code"></i> Requests (API)</span>
+
+  <span><i class="fas fa-robot"></i> Gemini AI API</span>
+</div>
     </div>
   </div>
 </div>
@@ -376,7 +384,7 @@
 .team {
   min-height: 100vh;
   padding: 120px 20px 80px;
-  background: var(--page-bg-gradient);
+  background: transparent;
 }
 .container {
   max-width: 1200px;
@@ -453,9 +461,8 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-    object-position: top center;
-    display: block;
-    border-radius: 0;
+  object-position: center center;
+
 }
 .card-image {
     position: relative;

@@ -474,8 +474,32 @@ const logout = () => { authStore.logout(); router.push('/') }
   --modal-bg: linear-gradient(145deg, #ffffff, #f0f5fa); --input-bg: rgba(0,0,0,0.04);
   --input-border: rgba(0,0,0,0.12); --input-color: #1a2537; --placeholder: rgba(0,0,0,0.3);
 }
-body { background: var(--body-bg); color: var(--text-primary); transition: background 0.3s ease, color 0.3s ease; }
-.navbar { width: 100%; position: fixed; top: 0; left: 0; z-index: 1000; background: var(--nav-bg); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-bottom: 1px solid var(--border-color); transition: all 0.4s ease; }
+body {
+  color: var(--text-primary);
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+#app {
+  min-height: 100vh;
+}
+
+#app[data-theme="dark"] {
+  background:
+    linear-gradient(
+      rgba(5,15,30,0.85),
+      rgba(5,15,30,0.85)
+    ),
+    url('./assets/gui_background_upscayl_3x_upscayl-standard-4x.png');
+
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+#app[data-theme="light"] {
+  background: var(--body-bg);
+}.navbar { width: 100%; position: fixed; top: 0; left: 0; z-index: 1000; background: var(--nav-bg); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-bottom: 1px solid var(--border-color); transition: all 0.4s ease; }
 .navbar.scrolled { background: var(--nav-bg-scroll); box-shadow: 0 4px 30px rgba(0,0,0,0.15); border-bottom-color: rgba(66,165,245,0.2); }
 .nav-container { max-width: 1400px; margin: 0 auto; height: 72px; display: flex; align-items: center; justify-content: space-between; padding: 0 40px; }
 .logo { display: flex; align-items: center; gap: 10px; text-decoration: none; flex-shrink: 0; }
