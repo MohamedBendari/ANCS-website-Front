@@ -23,8 +23,8 @@ const isLoggedIn = computed(() => authStore.isLoggedIn)
             <div class="platform-icon">
               <i class="fas fa-laptop-code"></i>
             </div>
-            <h2>ANCS v1.0.0</h2>
-            <p class="version-info">Stable Release • Released March 2026</p>
+            <h2>ANCS v2.3.1</h2>
+            <p class="version-info">Stable Release • Released June 2026</p>
             <div class="system-requirements">
               <h4>System Requirements:</h4>
               <ul>
@@ -48,11 +48,11 @@ const isLoggedIn = computed(() => authStore.isLoggedIn)
               </div>
               <!-- لو logged in — يظهر أزرار التحميل -->
               <template v-else>
-                <a href="https://raw.githubusercontent.com/MOHAmED3467/ANCS-website/main/public/ANCS.exe" class="btn primary" download>
+                <a href="https://github.com/zyada7med2/ANCS/releases/download/v2.3.1/ANCS.exe" class="btn primary" download>
                   <i class="fab fa-windows"></i>
                   Download for Windows
                 </a>
-                <a href="#" class="btn secondary">
+                <a href="#" class="btn secondary" disabled>
                   <i class="fab fa-linux"></i>
                   Download for Linux
                 </a>

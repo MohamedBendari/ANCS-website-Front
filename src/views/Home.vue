@@ -297,6 +297,20 @@ const openAuth = (type) => emit('open-auth', type)
     </div>
   </section>
 
+  <section class="book">
+    <div class="book-content">
+      <h2>ANCS Graduation Book</h2>
+      <p>
+        The project book is available again on the website. You can read full details
+        about the system goals, features, and implementation through the PDF file.
+      </p>
+      <div class="book-actions">
+        <a href="https://drive.google.com/file/d/13bB5T7bds6mW7pGl3De8pyImkt5g1wYQ/view?usp=sharing" target="_blank" rel="noopener noreferrer" class="btn primary">Open Book</a>
+        <a href="/ANCS-graduation-book.pdf" download class="btn secondary">Download Book</a>
+      </div>
+    </div>
+  </section>
+
   <section class="cta">
     <h2>Start Automating Your Network Today</h2>
     <div class="cta-buttons">
@@ -405,6 +419,12 @@ backdrop-filter: blur(8px); }
 .step p { color: var(--text-muted); }
 /* PREVIEW */
 .preview { background: var(--section-alt-bg); }
+
+.book { background: var(--body-bg); }
+.book-content { max-width: 900px; margin: auto; padding: 60px 0; }
+.book-content h2 { margin-bottom: 18px; color: #42a5f5; }
+.book-content p { max-width: 760px; margin: auto; line-height: 1.8; color: var(--text-muted); }
+.book-actions { margin-top: 24px; display: flex; justify-content: center; gap: 14px; flex-wrap: wrap; }
 
 .screenshots {
   display: flex;
