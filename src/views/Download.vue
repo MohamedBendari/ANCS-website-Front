@@ -97,39 +97,50 @@ const isLoggedIn = computed(() => authStore.isLoggedIn)
           </div>
         </div>
         <!-- Installation Steps -->
-        <div class="installation-guide">
-          <h3>Quick Installation Guide</h3>
-          <div class="steps">
-            <div class="step">
-              <div class="step-number">1</div>
-              <div class="step-content">
-                <h4>Download</h4>
-                <p>Download the installer for your operating system</p>
-              </div>
-            </div>
-            <div class="step">
-              <div class="step-number">2</div>
-              <div class="step-content">
-                <h4>Install Dependencies</h4>
-                <p>Run <code>pip install -r requirements.txt</code> and <code>npm install</code></p>
-              </div>
-            </div>
-            <div class="step">
-              <div class="step-number">3</div>
-              <div class="step-content">
-                <h4>Configure</h4>
-                <p>Edit config.json with your network settings</p>
-              </div>
-            </div>
-            <div class="step">
-              <div class="step-number">4</div>
-              <div class="step-content">
-                <h4>Launch</h4>
-                <p>Run <code>npm run dev</code> to start the application</p>
-              </div>
-            </div>
-          </div>
-        </div>
+        <!-- Installation Guide -->
+<div class="installation-guide">
+  <h3>Quick Installation Guide</h3>
+
+  <div class="steps">
+
+    <!-- Step 1 -->
+    <div class="step">
+      <div class="step-number">1</div>
+      <div class="step-content">
+        <h4>Download</h4>
+        <p>Download the latest <strong>ANCS.exe</strong> installer from this page.</p>
+      </div>
+    </div>
+
+    <!-- Step 2 -->
+    <div class="step">
+      <div class="step-number">2</div>
+      <div class="step-content">
+        <h4>Install</h4>
+        <p>Run <strong>ANCS.exe</strong> and follow the installation wizard.</p>
+      </div>
+    </div>
+
+    <!-- Step 3 -->
+    <div class="step">
+      <div class="step-number">3</div>
+      <div class="step-content">
+        <h4>Launch</h4>
+        <p>Open ANCS from your Desktop or Start Menu after installation.</p>
+      </div>
+    </div>
+
+    <!-- Step 4 -->
+    <div class="step">
+      <div class="step-number">4</div>
+      <div class="step-content">
+        <h4>Login & Start</h4>
+        <p>Sign in with your account and start automating your network configurations.</p>
+      </div>
+    </div>
+
+  </div>
+</div>
         <!-- Support -->
         <div class="support-section">
           <div class="support-card">
