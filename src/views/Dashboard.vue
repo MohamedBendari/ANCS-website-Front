@@ -110,7 +110,18 @@
                 <span class="stat-label">{{ t('question') }}</span>
               </div>
             </div>
-          </div>
+            <div class="stat-box">
+  <div class="stat-icon teal">
+    <i class="fas fa-handshake"></i>
+  </div>
+  <div class="stat-info">
+    <span class="stat-num">
+      {{ messages.filter(m => m.purpose === 'partnership').length }}
+    </span>
+    <span class="stat-label">{{ t('partnership') }}</span>
+  </div>
+</div>
+          </div> 
 
           <div class="table-card">
             <div class="table-header">
@@ -1083,6 +1094,7 @@ onMounted(() => {
 .stat-icon.green { background: rgba(34,197,94,0.12); color: #22c55e; }
 .stat-icon.orange { background: rgba(251,146,60,0.12); color: #fb923c; }
 .stat-icon.purple { background: rgba(167,139,250,0.12); color: #a78bfa; }
+.stat-icon.teal {background: rgba(20, 184, 166, 0.12);color: #14b8a6;}
 .stat-info { display: flex; flex-direction: column; }
 .stat-num { font-size: 26px; font-weight: 800; color: var(--text); line-height: 1.1; }
 .stat-label { font-size: 12.5px; color: var(--text2); margin-top: 3px; }
