@@ -8,10 +8,10 @@
         <span class="logo-text">ANCS</span>
       </div>
       <!-- Back Button -->
-<button class="sidebar-back-btn" @click="router.push('/')">
-  <i :class="lang === 'ar' ? 'fas fa-arrow-right' : 'fas fa-arrow-left'"></i>
-  <span>Back</span>
-</button>
+      <button class="sidebar-back-btn" @click="router.push('/')">
+        <i :class="lang === 'ar' ? 'fas fa-arrow-right' : 'fas fa-arrow-left'"></i>
+        <span>Back</span>
+      </button>
       <nav class="sidebar-nav">
         <button
           v-for="item in navItems" :key="item.id"
@@ -90,10 +90,10 @@
               </div>
             </div>
             <div class="stat-box">
-              <div class="stat-icon green"><i class="fas fa-handshake"></i></div>
+              <div class="stat-icon green"><i class="fas fa-shopping-cart"></i></div>
               <div class="stat-info">
-                <span class="stat-num">{{ messages.filter(m => m.purpose === 'partnership').length }}</span>
-                <span class="stat-label">{{ t('partnerships') }}</span>
+                <span class="stat-num">{{ messages.filter(m => m.purpose === 'buy').length }}</span>
+                <span class="stat-label">{{ t('buy') }}</span>
               </div>
             </div>
             <div class="stat-box">
@@ -104,10 +104,10 @@
               </div>
             </div>
             <div class="stat-box">
-              <div class="stat-icon purple"><i class="fas fa-shopping-cart"></i></div>
+              <div class="stat-icon purple"><i class="fas fa-question-circle"></i></div>
               <div class="stat-info">
-                <span class="stat-num">{{ messages.filter(m => m.purpose === 'buy').length }}</span>
-                <span class="stat-label">{{ t('purchases') }}</span>
+                <span class="stat-num">{{ messages.filter(m => m.purpose === 'question').length }}</span>
+                <span class="stat-label">{{ t('question') }}</span>
               </div>
             </div>
           </div>
@@ -142,10 +142,11 @@
                     <th>{{ t('type') }}</th>
                     <th>{{ t('message') }}</th>
                     <th>{{ t('date') }}</th>
+                    <th>{{ t('actions') }}</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr v-for="msg in filteredMessages" :key="msg.id" @click="openMessage(msg)" class="table-row">
+                  <tr v-for="msg in filteredMessages" :key="msg.id" class="table-row">
                     <td>
                       <div class="cell-user">
                         <div class="mini-avatar">{{ msg.name?.charAt(0) || '?' }}</div>
@@ -156,12 +157,22 @@
                     <td><span :class="['badge', msg.purpose]">{{ msg.purpose }}</span></td>
                     <td class="cell-msg">{{ msg.message?.slice(0, 60) }}{{ msg.message?.length > 60 ? '...' : '' }}</td>
                     <td class="cell-date">{{ formatDate(msg.created_at) }}</td>
+                    <td>
+                      <div class="action-btns">
+                        <button class="act-btn view" @click.stop="openMessage(msg)" :title="t('view')">
+                          <i class="fas fa-eye"></i>
+                        </button>
+                        <button class="act-btn delete" @click.stop="deleteMessage(msg)" :title="t('delete')">
+                          <i class="fas fa-trash"></i>
+                        </button>
+                      </div>
+                    </td>
                   </tr>
                 </tbody>
               </table>
             </div>
 
-            <div class="pagination" v-if="!isLoadingData">
+            <div class="pagination" v-if="!isLoadingData && (next || previous)">
               <button @click="prevPage" :disabled="!previous" class="page-btn">
                 <i class="fas fa-chevron-left"></i> {{ t('prev') }}
               </button>
@@ -369,20 +380,16 @@
                 <i class="fas fa-user-cog"></i>
                 <h3>{{ t('accountSettings') }}</h3>
               </div>
-               <div class="setting-row">
-  <div class="setting-info">
-    <span class="setting-name">{{ t('changePassword') }}</span>
-    <span class="setting-desc">{{ t('changePasswordDesc') }}</span>
-  </div>
-
-  <button
-    class="settings-action-btn"
-    @click="showPasswordModal = true"
-  >
-    <i class="fas fa-key"></i>
-    {{ t('change') }}
-  </button>
-</div>
+              <div class="setting-row">
+                <div class="setting-info">
+                  <span class="setting-name">{{ t('changePassword') }}</span>
+                  <span class="setting-desc">{{ t('changePasswordDesc') }}</span>
+                </div>
+                <button class="settings-action-btn" @click="showPasswordModal = true">
+                  <i class="fas fa-key"></i>
+                  {{ t('change') }}
+                </button>
+              </div>
               <div class="setting-row danger-row">
                 <div class="setting-info">
                   <span class="setting-name danger">{{ t('logout') }}</span>
@@ -555,103 +562,58 @@
       </div>
     </Transition>
 
-  </div>
-
-  <!-- CHANGE PASSWORD MODAL -->
-<Transition name="modal-fade">
-
-  <div
-    v-if="showPasswordModal"
-    class="msg-modal-overlay"
-    @click.self="showPasswordModal = false"
-  >
-
-    <div class="msg-modal user-modal">
-
-      <button
-        class="msg-modal-close"
-        @click="showPasswordModal = false"
-      >
-        <i class="fas fa-times"></i>
-      </button>
-
-      <div class="user-modal-header">
-        <div class="modal-avatar">
-          <i class="fas fa-key"></i>
-        </div>
-
-        <div>
-          <h3>Change Password</h3>
-          <p>Update your account password</p>
-        </div>
-      </div>
-
-      <div class="user-form">
-
-        <div class="form-row">
-          <label>Current Password</label>
-
-          <input
-            v-model="passwordForm.old_password"
-            type="password"
-            class="form-input"
-          >
-        </div>
-
-        <div class="form-row">
-          <label>New Password</label>
-
-          <input
-            v-model="passwordForm.new_password"
-            type="password"
-            class="form-input"
-          >
-        </div>
-
-        <div class="form-row">
-          <label>Confirm Password</label>
-
-          <input
-            v-model="passwordForm.confirm_password"
-            type="password"
-            class="form-input"
-          >
-        </div>
-
-        <div v-if="formError" class="form-error">
-          {{ formError }}
-        </div>
-
-        <div v-if="formSuccess" class="form-success">
-          {{ formSuccess }}
-        </div>
-
-        <div class="form-actions">
-
-          <button
-            class="form-cancel-btn"
-            @click="showPasswordModal = false"
-          >
-            Cancel
+    <!-- ══════ CHANGE PASSWORD MODAL ══════ -->
+    <Transition name="modal-fade">
+      <div v-if="showPasswordModal" class="msg-modal-overlay" @click.self="showPasswordModal = false">
+        <div class="msg-modal user-modal">
+          <button class="msg-modal-close" @click="showPasswordModal = false">
+            <i class="fas fa-times"></i>
           </button>
-          <button
-  type="button"
-  class="form-submit-btn"
-  @click.prevent="changePassword"
->
-  <i class="fas fa-save"></i>
-  Save Password
-</button>
+          <div class="user-modal-header">
+            <div class="modal-avatar">
+              <i class="fas fa-key"></i>
+            </div>
+            <div>
+              <h3>Change Password</h3>
+              <p>Update your account password</p>
+            </div>
+          </div>
 
+          <div class="user-form">
+            <div class="form-row">
+              <label>Current Password</label>
+              <input v-model="passwordForm.old_password" type="password" class="form-input">
+            </div>
+            <div class="form-row">
+              <label>New Password</label>
+              <input v-model="passwordForm.new_password" type="password" class="form-input">
+            </div>
+            <div class="form-row">
+              <label>Confirm Password</label>
+              <input v-model="passwordForm.confirm_password" type="password" class="form-input">
+            </div>
+
+            <div v-if="formError" class="form-error">
+              {{ formError }}
+            </div>
+            <div v-if="formSuccess" class="form-success">
+              {{ formSuccess }}
+            </div>
+
+            <div class="form-actions">
+              <button class="form-cancel-btn" @click="showPasswordModal = false">
+                Cancel
+              </button>
+              <button type="button" class="form-submit-btn" @click.prevent="changePassword">
+                <i class="fas fa-save"></i>
+                Save Password
+              </button>
+            </div>
+          </div>
         </div>
-
       </div>
-
-    </div>
-
+    </Transition>
   </div>
-
-</Transition>
 </template>
 
 <script setup>
@@ -685,7 +647,6 @@ const selectedMessage  = ref(null)
 const showNotifs       = ref(false)
 const notifications    = ref([{ id: 1, text: 'New message received' }])
 
-// ── User Modals State ──
 const showAddModal    = ref(false)
 const showEditModal   = ref(false)
 const showDeleteModal = ref(false)
@@ -716,9 +677,9 @@ const translations = {
     editUser: 'Edit User', totalUsers: 'Total Users', activeUsers: 'Active Users',
     adminUsers: 'Admins', inactiveUsers: 'Inactive', noUsers: 'No users found',
     user: 'User', role: 'Role', status: 'Status', joined: 'Joined', actions: 'Actions',
-    edit: 'Edit', delete: 'Delete', save: 'Save Changes', cancel: 'Cancel', loading: 'Loading...',
+    edit: 'Edit', delete: 'Delete', view: 'View', save: 'Save Changes', cancel: 'Cancel', loading: 'Loading...',
     confirmDelete: 'Confirm Delete', confirmDeleteDesc: 'Are you sure you want to delete',
-    password: 'Password',
+    password: 'Password', question: 'Question', buy: 'Buy',
     accountInfo: 'Account Information', username: 'Username', lastLogin: 'Last Login',
     language: 'Language', theme: 'Theme', darkMode: 'Dark Mode', lightMode: 'Light Mode',
     appearance: 'Appearance', themeMode: 'Theme Mode', themeModeDesc: 'Choose your preferred color scheme',
@@ -726,7 +687,7 @@ const translations = {
     languageSettings: 'Language', interfaceLang: 'Interface Language', interfaceLangDesc: 'Choose display language',
     accountSettings: 'Account', changePassword: 'Change Password', changePasswordDesc: 'Update your account password',
     change: 'Change', logout: 'Logout', logoutDesc: 'Sign out from your account',
-    buy: 'Buy', question: 'Question', partnership: 'Partnership',
+    partnership: 'Partnership',
   },
   ar: {
     messages: 'الرسائل', users: 'المستخدمون', profile: 'الملف الشخصي', settings: 'الإعدادات',
@@ -738,9 +699,9 @@ const translations = {
     editUser: 'تعديل المستخدم', totalUsers: 'إجمالي المستخدمين', activeUsers: 'النشطون',
     adminUsers: 'المشرفون', inactiveUsers: 'غير النشطين', noUsers: 'لا يوجد مستخدمون',
     user: 'المستخدم', role: 'الدور', status: 'الحالة', joined: 'تاريخ الانضمام', actions: 'الإجراءات',
-    edit: 'تعديل', delete: 'حذف', save: 'حفظ التغييرات', cancel: 'إلغاء', loading: 'جارٍ التحميل...',
+    edit: 'تعديل', delete: 'حذف', view: 'عرض', save: 'حفظ التغييرات', cancel: 'إلغاء', loading: 'جارٍ التحميل...',
     confirmDelete: 'تأكيد الحذف', confirmDeleteDesc: 'هل أنت متأكد من حذف',
-    password: 'كلمة المرور',
+    password: 'كلمة المرور', question: 'استفسار', buy: 'شراء',
     accountInfo: 'معلومات الحساب', username: 'اسم المستخدم', lastLogin: 'آخر تسجيل دخول',
     language: 'اللغة', theme: 'المظهر', darkMode: 'الوضع الداكن', lightMode: 'الوضع الفاتح',
     appearance: 'المظهر', themeMode: 'وضع المظهر', themeModeDesc: 'اختر نظام الألوان المفضل',
@@ -748,7 +709,7 @@ const translations = {
     languageSettings: 'اللغة', interfaceLang: 'لغة الواجهة', interfaceLangDesc: 'اختر لغة العرض',
     accountSettings: 'الحساب', changePassword: 'تغيير كلمة المرور', changePasswordDesc: 'تحديث كلمة مرور حسابك',
     change: 'تغيير', logout: 'تسجيل الخروج', logoutDesc: 'تسجيل الخروج من حسابك',
-    buy: 'شراء', question: 'استفسار', partnership: 'شراكة',
+    partnership: 'شراكة',
   }
 }
 const t = (key) => translations[lang.value][key] || translations['en'][key] || key
@@ -764,11 +725,9 @@ const currentSectionLabel = computed(() =>
   navItems.find(i => i.id === activeSection.value)?.label || 'messages'
 )
 
-// ── Avatar colors ──
 const avatarColors = ['#42a5f5','#0077b6','#22c55e','#f59e0b','#8b5cf6','#ef4444','#06b6d4']
 const avatarColor = (name) => avatarColors[name.charCodeAt(0) % avatarColors.length]
 
-// ── Fetch Messages ──
 const fetchMessages = async (url = 'https://ancs-website-backend-production.up.railway.app/api/messages/') => {
   isLoadingData.value = true
   let finalUrl = url
@@ -792,7 +751,6 @@ const fetchMessages = async (url = 'https://ancs-website-backend-production.up.r
   }
 }
 
-// ── Fetch Users ──
 const fetchUsers = async () => {
   isLoadingUsers.value = true
   try {
@@ -816,12 +774,12 @@ const filteredMessages = computed(() => {
 const nextPage = () => { if (next.value) { currentPage.value++; fetchMessages(next.value) } }
 const prevPage = () => { if (previous.value) { currentPage.value--; fetchMessages(previous.value) } }
 const openMessage = (msg) => { selectedMessage.value = msg }
+const deleteMessage = (msg) => { console.log('Delete message:', msg) }
 const formatDate = (d) => d ? new Date(d).toLocaleDateString(
   lang.value === 'ar' ? 'ar-EG' : 'en-US',
   { year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' }
 ) : ''
 
-// ── Add User ──
 const openAddModal = () => {
   userForm.value = { username: '', email: '', password: '', role: 'user' }
   formError.value = ''
@@ -851,7 +809,6 @@ const submitAddUser = async () => {
     const data = await res.json()
     if (!res.ok) throw new Error(data.username?.[0] || data.email?.[0] || data.detail || 'Failed to create user')
 
-    // لو الـ role admin، نعمل update بعد الإنشاء
     if (userForm.value.role === 'admin' && data.id) {
       await fetch(`https://ancs-website-backend-production.up.railway.app/api/users/${data.id}/update/`, {
         method: 'PUT',
@@ -870,7 +827,6 @@ const submitAddUser = async () => {
   }
 }
 
-// ── Edit User ──
 const openEditModal = (user) => {
   editForm.value = {
     id:        user.id,
@@ -897,7 +853,6 @@ const submitEditUser = async () => {
   formLoading.value = true
 
   try {
-
     const res = await fetch(
       `https://ancs-website-backend-production.up.railway.app/api/users/${editForm.value.id}/update/`,
       {
@@ -906,7 +861,6 @@ const submitEditUser = async () => {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${authStore.token}`
         },
-
         body: JSON.stringify({
           username: editForm.value.username,
           email: editForm.value.email,
@@ -931,17 +885,12 @@ const submitEditUser = async () => {
     }, 1200)
 
   } catch (err) {
-
     formError.value = err.message || 'Failed to update user.'
-
   } finally {
-
     formLoading.value = false
-
   }
 }
 
-// ── Delete User ──
 const confirmDelete = (user) => {
   userToDelete.value = user
   formError.value = ''
@@ -962,26 +911,19 @@ const submitDelete = async () => {
     formError.value = err.message || 'Failed to delete user.'
   } finally {
     formLoading.value = false
-  }}
-  const changePassword = async () => {
-      console.log('CHANGE PASSWORD CLICKED')
+  }
+}
 
+const changePassword = async () => {
   formError.value = ''
   formSuccess.value = ''
 
-  if (
-    !passwordForm.value.old_password ||
-    !passwordForm.value.new_password ||
-    !passwordForm.value.confirm_password
-  ) {
+  if (!passwordForm.value.old_password || !passwordForm.value.new_password || !passwordForm.value.confirm_password) {
     formError.value = 'All fields are required'
     return
   }
 
-  if (
-    passwordForm.value.new_password !==
-    passwordForm.value.confirm_password
-  ) {
+  if (passwordForm.value.new_password !== passwordForm.value.confirm_password) {
     formError.value = 'Passwords do not match'
     return
   }
@@ -989,7 +931,6 @@ const submitDelete = async () => {
   formLoading.value = true
 
   try {
-
     const res = await fetch(
       'https://ancs-website-backend-production.up.railway.app/api/change-password/',
       {
@@ -998,7 +939,6 @@ const submitDelete = async () => {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${authStore.token}`
         },
-
         body: JSON.stringify({
           old_password: passwordForm.value.old_password,
           new_password: passwordForm.value.new_password
@@ -1021,22 +961,17 @@ const submitDelete = async () => {
     }
 
     setTimeout(() => {
-        logout()
+      logout()
       showPasswordModal.value = false
     }, 1200)
 
   } catch (err) {
-
     formError.value = err.message
-
   } finally {
-
     formLoading.value = false
   }
 }
 
-
-// ── Theme & Lang ──
 const setTheme    = (t) => { theme.value = t; localStorage.setItem('dash-theme', t) }
 const setLang     = (l) => { lang.value  = l; localStorage.setItem('dash-lang',  l) }
 const toggleTheme = () => setTheme(theme.value === 'dark' ? 'light' : 'dark')
@@ -1158,6 +1093,7 @@ onMounted(() => {
 .table-header h3 { font-size: 16px; font-weight: 700; color: var(--text); }
 .table-actions { display: flex; align-items: center; gap: 10px; }
 .filter-select { background: var(--input-bg); border: 1px solid var(--border); border-radius: 8px; color: var(--text); font-size: 13px; padding: 7px 12px; font-family: inherit; cursor: pointer; outline: none; }
+.filter-select option { background: var(--bg); color: var(--text); }
 .add-btn { display: flex; align-items: center; gap: 7px; background: var(--accent); border: none; border-radius: 10px; color: #fff; font-size: 13.5px; font-weight: 600; padding: 9px 18px; cursor: pointer; font-family: inherit; transition: all 0.2s; }
 .add-btn:hover { background: var(--accent2); transform: translateY(-1px); }
 .loading-state { padding: 24px; display: flex; flex-direction: column; gap: 12px; }
@@ -1171,7 +1107,7 @@ table { width: 100%; border-collapse: collapse; }
 thead tr { border-bottom: 1px solid var(--border); }
 th { padding: 12px 20px; font-size: 12px; font-weight: 700; color: var(--text3); text-transform: uppercase; letter-spacing: 0.5px; text-align: left; white-space: nowrap; }
 .rtl th { text-align: right; }
-.table-row { border-bottom: 1px solid var(--border); transition: background 0.15s; cursor: pointer; }
+.table-row { border-bottom: 1px solid var(--border); transition: background 0.15s; }
 .table-row:last-child { border-bottom: none; }
 .table-row:hover { background: var(--hover); }
 td { padding: 14px 20px; font-size: 13.5px; color: var(--text); vertical-align: middle; }
@@ -1197,6 +1133,8 @@ td { padding: 14px 20px; font-size: 13.5px; color: var(--text); vertical-align: 
 .act-btn { width: 30px; height: 30px; border-radius: 8px; border: 1px solid var(--border); background: var(--input-bg); cursor: pointer; font-size: 12px; display: flex; align-items: center; justify-content: center; transition: all 0.2s; }
 .act-btn.edit { color: #42a5f5; }
 .act-btn.edit:hover { background: rgba(66,165,245,0.15); border-color: #42a5f5; }
+.act-btn.view { color: #22c55e; }
+.act-btn.view:hover { background: rgba(34,197,94,0.15); border-color: #22c55e; }
 .act-btn.delete { color: #ef4444; }
 .act-btn.delete:hover { background: rgba(239,68,68,0.15); border-color: #ef4444; }
 
@@ -1250,47 +1188,32 @@ td { padding: 14px 20px; font-size: 13.5px; color: var(--text); vertical-align: 
 .settings-action-btn.danger:hover { background: #ef4444; color: #fff; }
 
 /* ══════ MODALS ══════ */
-.msg-modal-overlay{
+.msg-modal-overlay {
   position: fixed;
   inset: 0;
-
   background: rgba(0,0,0,0.75);
-
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
-
   z-index: 2000;
-
   display: flex;
   align-items: center;
   justify-content: center;
-
   padding: 20px;
 }
-.msg-modal{
-  background: #0f1724;
-
-  border: 1px solid rgba(255,255,255,0.08);
-
+.msg-modal {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
   border-radius: 24px;
-
   width: 100%;
   max-width: 520px;
-
   padding: 32px;
-
-  box-shadow:
-    0 25px 80px rgba(0,0,0,0.65),
-    0 0 0 1px rgba(255,255,255,0.03);
-
+  box-shadow: 0 25px 80px rgba(0,0,0,0.65), 0 0 0 1px rgba(255,255,255,0.03);
   position: relative;
-
-  color: #fff;
+  color: var(--text);
 }
 .msg-modal-close { position: absolute; top: 16px; right: 16px; width: 34px; height: 34px; border-radius: 10px; background: var(--hover); border: 1px solid var(--border); color: var(--text2); font-size: 14px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s; }
 .msg-modal-close:hover { background: rgba(239,68,68,0.15); color: #ef4444; border-color: #ef4444; }
 
-/* Message Modal */
 .msg-modal-header { display: flex; align-items: center; gap: 16px; margin-bottom: 24px; }
 .modal-avatar { width: 48px; height: 48px; border-radius: 14px; background: linear-gradient(135deg, #42a5f5, #0077b6); display: flex; align-items: center; justify-content: center; font-size: 18px; font-weight: 700; color: #fff; flex-shrink: 0; }
 .msg-modal-header h3 { font-size: 17px; font-weight: 700; color: var(--text); }
@@ -1302,7 +1225,6 @@ td { padding: 14px 20px; font-size: 13.5px; color: var(--text); vertical-align: 
 .reply-btn { display: flex; align-items: center; gap: 8px; padding: 9px 20px; background: var(--accent); border-radius: 10px; color: #fff; text-decoration: none; font-size: 13.5px; font-weight: 600; transition: all 0.2s; }
 .reply-btn:hover { background: var(--accent2); transform: translateY(-1px); }
 
-/* User Modals */
 .user-modal { max-width: 480px; }
 .user-modal-header { display: flex; align-items: center; gap: 16px; margin-bottom: 28px; padding-bottom: 20px; border-bottom: 1px solid var(--border); }
 .user-modal-header h3 { font-size: 18px; font-weight: 700; color: var(--text); margin-bottom: 4px; }
@@ -1311,49 +1233,20 @@ td { padding: 14px 20px; font-size: 13.5px; color: var(--text); vertical-align: 
 .user-form { display: flex; flex-direction: column; gap: 16px; }
 .form-row { display: flex; flex-direction: column; gap: 6px; }
 .form-row label { font-size: 13px; font-weight: 600; color: var(--text2); }
-.form-input{
-  background: rgba(255,255,255,0.04);
-
-  border: 1px solid rgba(255,255,255,0.08);
-
+.form-input {
+  background: var(--input-bg);
+  border: 1px solid var(--border);
   border-radius: 12px;
-
-  color: #fff;
-
+  color: var(--text);
   font-size: 14px;
-
   padding: 13px 14px;
-
   font-family: inherit;
-
   outline: none;
-
   transition: all 0.25s;
-
   width: 100%;
 }
-
-.form-input:focus{
-  border-color: #42a5f5;
-
-  box-shadow:
-    0 0 0 4px rgba(66,165,245,0.12);
-
-  background: rgba(255,255,255,0.06);
-}
-.user-modal-header h3{
-  color: #fff;
-}
-
-.user-modal-header p{
-  color: rgba(255,255,255,0.55);
-}
-
-.form-row label{
-  color: rgba(255,255,255,0.8);
-}
 .form-input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(66,165,245,0.1); }
-.form-input option { background: var(--bg2); color: var(--text); }
+.form-input option { background: var(--bg); color: var(--text); }
 
 .form-error { display: flex; align-items: center; gap: 8px; padding: 12px 16px; background: rgba(239,68,68,0.1); border: 1px solid rgba(239,68,68,0.25); border-radius: 10px; color: #fca5a5; font-size: 13px; }
 .form-success { display: flex; align-items: center; gap: 8px; padding: 12px 16px; background: rgba(34,197,94,0.1); border: 1px solid rgba(34,197,94,0.25); border-radius: 10px; color: #86efac; font-size: 13px; }
@@ -1367,7 +1260,6 @@ td { padding: 14px 20px; font-size: 13.5px; color: var(--text); vertical-align: 
 .form-submit-btn.danger { background: #ef4444; }
 .form-submit-btn.danger:hover:not(:disabled) { background: #dc2626; }
 
-/* Delete Modal */
 .delete-modal { max-width: 400px; text-align: center; padding: 40px 32px; }
 .delete-icon { width: 70px; height: 70px; border-radius: 20px; background: rgba(239,68,68,0.1); border: 1px solid rgba(239,68,68,0.2); display: flex; align-items: center; justify-content: center; font-size: 28px; color: #ef4444; margin: 0 auto 20px; }
 .delete-modal h3 { font-size: 20px; font-weight: 700; color: var(--text); margin-bottom: 12px; }
@@ -1375,11 +1267,9 @@ td { padding: 14px 20px; font-size: 13.5px; color: var(--text); vertical-align: 
 .delete-modal p strong { color: var(--text); }
 .delete-modal .form-actions { justify-content: center; }
 
-/* TRANSITIONS */
 .modal-fade-enter-active, .modal-fade-leave-active { transition: all 0.3s ease; }
 .modal-fade-enter-from, .modal-fade-leave-to { opacity: 0; transform: scale(0.96); }
 
-/* RTL */
 .rtl .nav-item { flex-direction: row-reverse; }
 .rtl .cell-user { flex-direction: row-reverse; }
 .rtl .topbar-left { text-align: right; }
@@ -1389,42 +1279,34 @@ td { padding: 14px 20px; font-size: 13.5px; color: var(--text); vertical-align: 
 .rtl .msg-modal-close { right: auto; left: 16px; }
 .rtl .form-actions { justify-content: flex-start; }
 
-/* SIDEBAR BACK BUTTON */
-.sidebar-back-btn{
+.sidebar-back-btn {
   width: 100%;
   display: flex;
   align-items: center;
   gap: 10px;
-
   padding: 12px 14px;
   margin-bottom: 18px;
-
   border: 1px solid rgba(66,165,245,0.2);
   border-radius: 12px;
-
   background: rgba(66,165,245,0.08);
   color: #42a5f5;
-
   font-size: 14px;
   font-weight: 600;
-
   cursor: pointer;
   transition: 0.25s;
-
   font-family: inherit;
 }
 
-.sidebar-back-btn:hover{
+.sidebar-back-btn:hover {
   background: #42a5f5;
   color: white;
   transform: translateX(-2px);
 }
 
-.sidebar-back-btn i{
+.sidebar-back-btn i {
   font-size: 13px;
 }
 
-/* RESPONSIVE */
 @media (max-width: 1100px) { .stats-row { grid-template-columns: repeat(2, 1fr); } .profile-grid { grid-template-columns: 1fr; } }
 @media (max-width: 768px) { .sidebar { display: none; } .content-area { padding: 20px 16px; } .topbar { padding: 0 16px; } .stats-row { grid-template-columns: repeat(2, 1fr); gap: 12px; } .topbar-search { display: none; } }
 @media (max-width: 480px) { .stats-row { grid-template-columns: 1fr; } .msg-modal-overlay { backdrop-filter: none !important; background: rgba(0,0,0,0.85) !important; } }
