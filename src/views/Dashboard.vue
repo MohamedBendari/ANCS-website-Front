@@ -747,9 +747,16 @@ const fetchMessages = async (url = 'https://ancs-website-backend-production.up.r
     const res = await fetch(finalUrl, { headers: { Authorization: `Bearer ${authStore.token}` } })
     if (res.status === 401) return logout()
     const data = await res.json()
-    messages.value = data.results || []
-    next.value = data.next
-    previous.value = data.previous
+
+messages.value = data.results || []
+
+next.value = data.next
+  ? data.next.replace("http://", "https://")
+  : null
+
+  previous.value = data.previous
+  ? data.previous.replace("http://", "https://")
+  : null
   } catch {
     messages.value = [
       { id: 1, name: 'Ahmed Hassan', email: 'ahmed@example.com', purpose: 'buy', message: 'I want to purchase ANCS for our company.', created_at: new Date().toISOString() },
