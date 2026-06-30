@@ -785,7 +785,36 @@ const filteredMessages = computed(() => {
 const nextPage = () => { if (next.value) { currentPage.value++; fetchMessages(next.value) } }
 const prevPage = () => { if (previous.value) { currentPage.value--; fetchMessages(previous.value) } }
 const openMessage = (msg) => { selectedMessage.value = msg }
-const deleteMessage = (msg) => { console.log('Delete message:', msg) }
+const deleteMessage = async (msg) => {
+
+  const confirmed = confirm(`Delete message from ${msg.name}?`)
+
+  if (!confirmed) return
+
+  try {
+
+    const res = await fetch(
+      `https://ancs-website-backend-production.up.railway.app/api/messages/${msg.id}/delete/`,
+      {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${authStore.token}`
+        }
+      }
+    )
+
+    if (!res.ok) {
+      throw new Error("Failed to delete message")
+    }
+
+    // تحديث الجدول بعد الحذف
+    await fetchMessages()
+
+  } catch (err) {
+    alert(err.message)
+  }
+
+}
 const formatDate = (d) => d ? new Date(d).toLocaleDateString(
   lang.value === 'ar' ? 'ar-EG' : 'en-US',
   { year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' }
