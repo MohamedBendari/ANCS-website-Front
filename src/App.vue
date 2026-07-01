@@ -46,9 +46,7 @@
             <button class="btn-logout" @click="logout">Logout</button>
           </template>
         </div>
-        <button class="mobile-toggle" @click="toggleMenu" :class="{ 'active': isMenuOpen }" aria-label="Toggle menu">
-          <span></span><span></span><span></span>
-        </button>
+        
       </div>
       <div class="mobile-menu" :class="{ 'open': isMenuOpen }">
         <router-link to="/" @click="closeMenu">Home</router-link>
@@ -243,7 +241,7 @@
         <p>© 2026 ANCS. All rights reserved. Built with <i class="fas fa-heart"></i> by the ANCS Team.</p>
       </div>
     </footer>
-
+<BottomNavigation @toggle-menu="toggleMenu" />
   </div>
 </template>
 
@@ -252,6 +250,7 @@ import { ref, onMounted, onUnmounted, computed } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import { useAuthStore } from './stores/auth'
 import { useThemeStore } from './stores/theme'
+import BottomNavigation from './components/BottomNavigation.vue'
 
 const router     = useRouter()
 const route      = useRoute()
